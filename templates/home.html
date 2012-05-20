@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% from 'macros/paging.html' import paging %}
+
+{% block content %}
+  <div class="block">
+    <h1>
+      Blogs
+    </h1>
+    <ul class="list">
+      {% for blog in blogs.object_list %}
+        <li>
+          <a href="{{ url('blog.views.blog', slug=blog.slug) }}">
+            {{ blug.title|upper }}
+          </a>
+          <div>
+            {{ blog.body|truncate(100) }}
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+
+    {{ paging(request, blogs) }}
+  </div>
+
+{% endblock %}

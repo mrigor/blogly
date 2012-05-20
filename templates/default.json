@@ -1,0 +1,4 @@
+{ {% for keyvalue in context.items() %}
+  {% if loop.index0 != 0 %},{% endif %}
+  "{{ keyvalue.0 }}": {{ keyvalue.1|json }}
+  {% endfor %} }

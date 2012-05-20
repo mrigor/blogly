@@ -1,0 +1,13 @@
+{% macro line(field) %}
+  {% autoescape false %}
+    <div class="line {{ field.field.required|yesno('required,') }}">
+      {{ field.label_tag() }}
+      {{ field }}
+      {% if field.errors %}
+        <span class="error">
+          {{ field.errors|striptags }}
+        </span>
+      {% endif %}
+    </div>
+  {% endautoescape %}
+{% endmacro %}

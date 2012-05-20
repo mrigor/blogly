@@ -1,0 +1,6 @@
+.DS_Store
+*.swp
+*.pyc
+/local_settings.py
+/ve
+/static/bytecode

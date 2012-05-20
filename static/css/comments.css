@@ -1,0 +1,12 @@
+.comments.list .children{
+  padding-left:10px;
+}
+.comments .author{
+  font-weight:bold;
+}
+.comments .content{
+  margin:4px 0;
+}
+.comments .footer a{
+  color:#6B84B4;
+}

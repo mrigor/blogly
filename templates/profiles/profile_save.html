@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% from 'macros/forms.html' import line %}
+
+{% block content %}
+
+  <form class="defaultForm" method="post" action="{{ url('profiles.views.profile_save', request.user.id) }}">
+
+    {% for field in form.fields %}
+      {{ line(form[field]) }}
+    {% endfor %}
+
+    <input type="submit" value="Save" />
+  </form>
+
+{% endblock %}
+

@@ -1,0 +1,14 @@
+{% from 'macros/paging.html' import paging %}
+
+{% if commentsTree %}
+  <h3>Comments</h3>
+  <ul class="list comments">
+    {% for id in commentsTree %}
+      {% set children = commentsTree[id] %}
+      {% set comment = commentsIndex[id] %}
+      {% include "comments/comment.html" %}
+    {% endfor %}
+  </ul>
+
+  {{ paging(request, comments) }}
+{% endif %}

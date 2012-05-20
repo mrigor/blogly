@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% from 'macros/paging.html' import paging %}
+
+{% block content %}
+  <div class="block">
+    <div class="page-header">
+      <h1>
+        Blogs
+        {% if request.user.is_staff or request.user.is_supseruser %}
+          <small>
+            <a class="normal" href="{{ url('blog.views.blog_save') }}">Write</a>
+          </small>
+        {% endif %}
+      </h1>
+    </div>
+    <ul class="list">
+      {% for blog in blogs.object_list %}
+        <li>
+          <a href="{{ url('blog.views.blog', slug=blog.slug) }}">
+            {{ blog.title|upper }}
+          </a>
+          <div>
+            {{ blog.body|truncate(100) }}
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+
+    {{ paging(request, blogs) }}
+  </div>
+
+{% endblock %}

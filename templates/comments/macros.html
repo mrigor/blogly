@@ -1,0 +1,33 @@
+{% macro comment(request, c, children=None, index=None) %}
+  {#:: children - {{ children }}#}
+  <li class="nested_{{ c.nestCount() }}">
+    <div class="comment" id="comment_{{ c.id }}">
+      <div class="header">
+        by <a href="" class="author">{{ c.author.username }}</a>
+        {% if c.num_edits %}
+          (edited {{ c.num_edits }} times)
+        {% endif %}
+      </div>
+      <div class="content">
+        {{- c.content|linebreaks -}}
+      </div>
+      <div class="commentFooter">
+        <span title="{{ c.created_ts|date }}">{{ c.created_ts|datedelta }}</span>
+        {% if c.author == request.user %}
+          <button class="commentEdit btn btn-mini">Edit</button>
+        {% endif %}
+        <button class="commentReply btn btn-mini">Reply</button>
+      </div>
+    </div>
+    {% if children %}
+      <ul class="children">
+        {% for childId in children %}
+          {#:: childId - {{ childId }} <br>#}
+          {% set ch = children[childId] %}
+          {% set cm = index[childId] %}
+          {{ comment(request, cm, ch, index) }}
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </li>
+{% endmacro %}

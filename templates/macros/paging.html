@@ -1,0 +1,55 @@
+{% macro paging(request, page) %}
+  {%- set path = request.path -%}
+  {% if page and page.number and not (page.paginator.num_pages == 1) %}
+    <div class="pagination">
+      <ul>
+        {% if page.has_previous() %}
+        <li>
+          <a href="?page={{ page.previous_page_number() }}">&laquo;</a>
+        </li>
+        {% endif %}
+
+        {% set range = page.paginator.getPages(current=page.number) %}
+        {%- for num in range %}
+          {%- if num == page.number -%}
+          <li class="active">
+            <a href="#">{{ num }}</a>
+          </li>
+          {%- else -%}
+          <li>
+            <a href="?page={{ num }}" >{{ num }}</a>
+          </li>
+          {%- endif -%}
+        {% endfor -%}
+
+        {% if page.has_next() %}
+          <li>
+            <a href="?page={{ page.next_page_number() }}">&raquo;</a>
+          </li>
+        {% endif %}
+      </ul>
+    </div>
+  {% endif %}
+{% endmacro %}
+
+{% macro pagingPrevNext(request, page, max=10, target=None, scrollTo=None, requestPath=None) %}
+  {% if page and page.data and (len(page.data) > 1 or not page.isFirstPage() )%}
+    <div class="paging">
+      <div class="pages">
+
+        {% if not requestPath %}
+          {% set requestPath = request.path %}
+        {% endif %}
+
+        {% if not page.isFirstPage() %}
+          <a class="nextprev pagingPrev action" href="{{ requestPath }}?page={{ page.previousPage() }}" {% if target %} target="{{ target }}"{% endif %}{% if scrollTo %} scrollTo="{{ scrollTo}}"{% endif %}>&laquo; Prev</a>
+        {% endif %}
+
+        {% if not page.isLastPage() %}
+          <a class="nextprev action" href="{{ requestPath }}?page={{ page.nextPage() }}" {% if target %} target="{{ target }}"{% endif %}{% if scrollTo %} scrollTo="{{ scrollTo}}"{% endif %}>Next &raquo;</a>
+        {% endif %}
+
+      </div>
+    </div>
+  {% endif %}
+{% endmacro %}

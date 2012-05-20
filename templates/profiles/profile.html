@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% from 'macros/paging.html' import paging %}
+
+{% block content %}
+  <h1>
+    {{ user.username }}'s profile
+  </h1>
+  <div class="block">
+    {% if request.user == user %}
+      <div id="profileControls">
+        <a href="{{ url('profiles.views.profile_save', user_id = request.user.id) }}">
+          Edit
+        </a>
+      </div>
+    {% endif %}
+    <div class="line">
+      <label>Id:</label>
+      {{ user.profile.id }}
+    </div>
+    <div class="line">
+      <label>First Name:</label>
+      {{ user.profile.first_name }}
+    </div>
+    <div class="line">
+      <label>Last Name:</label>
+      {{ user.profile.last_name }}
+    </div>
+  </div>
+  <div class="block">
+    <h2>Blogs</h2>
+    <ul class="list">
+      {% for blog in blogs %}
+        <li>
+          <a href="{{ url('blog.views.blog', slug=blog.slug) }}">
+            {{ blog.title|upper }}
+          </a>
+          <div>
+            {{ blog.body|truncate(100) }}
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+    <a href="">View more (TODO)</a>
+  </div>
+{% endblock %}

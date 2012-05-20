@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% from 'macros/forms.html' import line %}
+
+{% block content %}
+
+  <form class="defaultForm" method="post"
+      action="{{ url('blog.views.blog_save', blog.slug) if blog else url('blog.views.blog_save') }}">
+    {% autoescape false %}
+
+    {% for field in form.fields %}
+      {{ line(form[field]) }}
+    {% endfor %}
+  {% endautoescape %}
+
+  <input type="submit" class="btn btn-large" value="Save" />
+</form>
+
+{% endblock %}
+
+{% block js %}
+  <script type="text/javascript" src="/static/js/jquery.autoResizable.js"></script>
+  <script type="text/javascript">
+    jq('#id_description').autoResizable({maxHeight:400});
+  </script>
+{% endblock %}
+

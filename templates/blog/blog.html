@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="block">
+    <div class="page-header">
+      <h1>
+        {{ blog.title }}
+        <small>
+          by
+          <a href="{{ url('profiles.views.profile', user_id=blog.author.id) }}">
+            {{ blog.author.username }}
+          </a>
+          <span title="{{ blog.created_ts|date }}">{{ blog.created_ts|datedelta }}</span>
+          {% if blog.author == request.user %}
+            <a class="btn btn-mini" 
+                href="{{ url('blog.views.blog_save', blog.slug) }}">Edit</a>
+          {% endif %}
+        </small>
+      </h1>
+    </div>
+    <div class="well">
+      {{ blog.body }}
+    </div>
+  </div>
+
+  <div class="block">
+    {% if not request.user.is_authenticated() %}
+      Login to comment
+    {% else %}
+      <form method="POST" action="{{ request.get_full_path() }}">
+        {{ commentForm.errors }}
+        <div>
+          {{ commentForm.content|safe }}
+        </div>
+        <input type="submit" class="btn" value="Comment"/>
+      </form>
+    {% endif %}
+  </div>
+  <div class="block" id="comments">
+    {% include "comments/comments.html" %}
+  </div>
+{% endblock %}
+
+{% block css %}
+  <link rel="stylesheet" href="/static/css/blog.css?v=" type="text/css" />
+  <link rel="stylesheet" href="/static/css/comments.css?v=" type="text/css" />
+{% endblock %}
+
+{% block static %}
+  <script type="text/javascript" src="/static/js/comments.js?v="></script>
+{% endblock %}
+
+{% block js %}
+  <script>
+    jq('.commentReply').live('click', function(e){new GB.comments.reply(e, 'blog');});
+    jq('.commentEdit').live('click', function(e){new GB.comments.edit(e, 'blog');});
+  </script>
+{% endblock %}

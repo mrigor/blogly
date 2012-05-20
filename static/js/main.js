@@ -1,0 +1,3 @@
+// GoBook namespace
+var GB = {
+};

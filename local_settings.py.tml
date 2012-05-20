@@ -1,0 +1,6 @@
+ENVIRONMENT = 'dev'
+# Whether to echo all sql statements to stdout for runserver
+VERBOSE_SQL_STATEMENTS = True
+
+DATABASE_USER = ''
+DATABASE_PASSWORD = ''

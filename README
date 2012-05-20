@@ -7,6 +7,8 @@ Installation:
   $ . ve/bin/activate
   $ pip install -r DEPS
 
+  Create a local_settings.py file from local_settings.py.tmpl template
+
 Run:
   $ python manage.py syncdb
   $ python manage.py runserver
